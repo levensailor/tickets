@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wilmington Tickets
 
-## Getting Started
+Ticketing app for local music events in Wilmington, North Carolina.
 
-First, run the development server:
+Users sign in with Google, Facebook, Apple, or email. Organizers create events with flyers, lineup, presale codes, and cohosts. Attendees buy tickets through Stripe Checkout. The platform collects all ticket revenue centrally (organizers are paid offline).
+
+**Author:** Chris Levensailor
+
+## Stack
+
+- Next.js (App Router) + TypeScript + Tailwind + shadcn/ui
+- Supabase Auth, Postgres, and Storage
+- Stripe Checkout (platform-collect)
+- Resend for cohost invite emails
+- Deployed on Vercel
+
+## Public assets / live URL
+
+- Production URL: set after Vercel deploy (also configure `NEXT_PUBLIC_SITE_URL`)
+- Login: open `/login` and choose Google, Facebook, Apple, or email magic link
+
+## Local development
+
+1. Copy `.env.example` to `.env.local` and fill in values.
+2. Create a [Supabase](https://supabase.com) project.
+3. In Supabase Auth, enable Google, Facebook, Apple, and Email providers. Enable **automatic identity linking by email**.
+4. Run the SQL migration in the Supabase SQL editor:
+   - [`supabase/migrations/001_initial_schema.sql`](supabase/migrations/001_initial_schema.sql)
+5. Create a [Stripe](https://stripe.com) account and copy test keys.
+6. Create a [Resend](https://resend.com) API key for invite emails.
+7. Install and run:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Prefer deploying to Vercel for a full end-to-end check. Local `npm run dev` is optional.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Variable | Purpose |
+|---|---|
+| `NEXT_PUBLIC_APP_NAME` | Display name (default: Wilmington Tickets) |
+| `NEXT_PUBLIC_SITE_URL` | Canonical site URL (used for OAuth redirects, Stripe, invites) |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role (webhooks / invites) |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
+| `STRIPE_SECRET_KEY` | Stripe secret key |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret |
+| `RESEND_API_KEY` | Resend API key |
+| `RESEND_FROM_EMAIL` | From address for invites |
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Push this repository to GitHub.
+2. Import the project in Vercel and set all environment variables above.
+3. Deploy.
+4. In Stripe Dashboard → Developers → Webhooks, add endpoint:
+   - URL: `https://<your-domain>/api/webhooks/stripe`
+   - Event: `checkout.session.completed`
+   - Copy the signing secret into `STRIPE_WEBHOOK_SECRET`.
+5. In each OAuth provider console, add the Supabase callback URL shown in Supabase Auth settings.
+6. Set `NEXT_PUBLIC_SITE_URL` to the production URL and redeploy if needed.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Login instructions
+
+1. Visit `/login`.
+2. Choose **Continue with Google**, **Facebook**, **Apple**, or enter an email for a magic link.
+3. After sign-in, your avatar appears at the top right with **Purchase History**, **Edit Profile**, and **Sign Out**.
+4. Create events from the homepage **Create New Event** button.
+5. Non-creators open an event to view details and buy tickets.
+
+## Payments model
+
+Stripe Checkout uses a **platform-collect** model: one Stripe account receives all ticket payments. Organizer payouts are handled outside the app.
+
+## Manual SQL
+
+Schema changes ship as SQL files under `supabase/migrations/`. Run them manually in the Supabase SQL editor — they are not applied automatically by the app.
