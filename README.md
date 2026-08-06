@@ -16,8 +16,11 @@ Users sign in with Google, Facebook, Apple, or email. Organizers create events w
 
 ## Public assets / live URL
 
-- Production URL: set after Vercel deploy (also configure `NEXT_PUBLIC_SITE_URL`)
+- Production URL: [https://tickets-weld-beta.vercel.app](https://tickets-weld-beta.vercel.app)
 - Login: open `/login` and choose Google, Facebook, Apple, or email magic link
+- GitHub: [https://github.com/levensailor/tickets](https://github.com/levensailor/tickets)
+
+> Auth, database, payments, and email require Supabase / Stripe / Resend credentials in the Vercel project environment variables (see below). Until those are set and the SQL migration is run, the UI will load but sign-in and event data will not work end-to-end.
 
 ## Local development
 
@@ -54,15 +57,15 @@ npm run dev
 
 ## Deploy on Vercel
 
-1. Push this repository to GitHub.
-2. Import the project in Vercel and set all environment variables above.
-3. Deploy.
+1. Push this repository to GitHub (already linked: `levensailor/tickets`).
+2. In the Vercel project **tickets**, set all environment variables above for Production (and Preview if desired).
+3. Set `NEXT_PUBLIC_SITE_URL` to `https://tickets-weld-beta.vercel.app` (or your custom domain) and redeploy.
 4. In Stripe Dashboard → Developers → Webhooks, add endpoint:
-   - URL: `https://<your-domain>/api/webhooks/stripe`
+   - URL: `https://tickets-weld-beta.vercel.app/api/webhooks/stripe`
    - Event: `checkout.session.completed`
    - Copy the signing secret into `STRIPE_WEBHOOK_SECRET`.
 5. In each OAuth provider console, add the Supabase callback URL shown in Supabase Auth settings.
-6. Set `NEXT_PUBLIC_SITE_URL` to the production URL and redeploy if needed.
+6. Run [`supabase/migrations/001_initial_schema.sql`](supabase/migrations/001_initial_schema.sql) in the Supabase SQL editor.
 
 ## Login instructions
 
