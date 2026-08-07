@@ -4,8 +4,8 @@ import { LegalPage } from "@/components/legal-page";
 import { publicEnv } from "@/lib/env";
 
 const appName = publicEnv.appName;
-const siteUrl = publicEnv.siteUrl || "https://tickets-weld-beta.vercel.app";
-const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "privacy@example.com";
+const siteUrl = publicEnv.siteUrl;
+const contactEmail = publicEnv.contactEmail;
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -157,7 +157,8 @@ export default function PrivacyPolicyPage() {
       </p>
       <p>
         See also our{" "}
-        <Link href="/terms">Terms of Service</Link>.
+        <Link href="/terms">Terms of Service</Link> and{" "}
+        <Link href="/data-deletion">Data Deletion</Link> instructions.
       </p>
     </LegalPage>
   );

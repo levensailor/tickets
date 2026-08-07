@@ -1,10 +1,11 @@
-# Wilmington Tickets
+# Band Guru
 
 Ticketing app for local music events in Wilmington, North Carolina.
 
 Users sign in with Google, Facebook, Apple, or email. Organizers create events with flyers, lineup, presale codes, and cohosts. Attendees buy tickets through Stripe Checkout. The platform collects all ticket revenue centrally (organizers are paid offline).
 
-**Author:** Chris Levensailor
+**Author:** Chris Levensailor  
+**Domain:** [band.guru](https://band.guru)
 
 ## Stack
 
@@ -16,9 +17,12 @@ Users sign in with Google, Facebook, Apple, or email. Organizers create events w
 
 ## Public assets / live URL
 
-- Production URL: [https://tickets-weld-beta.vercel.app](https://tickets-weld-beta.vercel.app)
-- Privacy Policy: [https://tickets-weld-beta.vercel.app/privacy](https://tickets-weld-beta.vercel.app/privacy)
-- Terms of Service: [https://tickets-weld-beta.vercel.app/terms](https://tickets-weld-beta.vercel.app/terms)
+- Production domain: [https://band.guru](https://band.guru)
+- Vercel URL: [https://tickets-weld-beta.vercel.app](https://tickets-weld-beta.vercel.app)
+- App icon (1024×1024): [`/public/icon-1024.png`](public/icon-1024.png)
+- Privacy Policy: [https://band.guru/privacy](https://band.guru/privacy)
+- Terms of Service: [https://band.guru/terms](https://band.guru/terms)
+- Data Deletion: [https://band.guru/data-deletion](https://band.guru/data-deletion)
 - Login: open `/login` and choose Google, Facebook, Apple, or email magic link
 - GitHub: [https://github.com/levensailor/tickets](https://github.com/levensailor/tickets)
 
@@ -46,12 +50,12 @@ npm run dev
 
 | Variable | Purpose |
 |---|---|
-| `NEXT_PUBLIC_APP_NAME` | Display name (default: Wilmington Tickets) |
-| `NEXT_PUBLIC_CONTACT_EMAIL` | Contact email shown on Privacy / Terms pages |
-| `NEXT_PUBLIC_SITE_URL` | Canonical site URL (used for OAuth redirects, Stripe, invites) |
+| `NEXT_PUBLIC_APP_NAME` | Display name (default: Band Guru) |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | Contact email shown on Privacy / Terms / Data Deletion pages |
+| `NEXT_PUBLIC_SITE_URL` | Canonical site URL (default: https://band.guru) |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role (webhooks / invites) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role (webhooks / invites / account deletion) |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
 | `STRIPE_SECRET_KEY` | Stripe secret key |
 | `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret |
@@ -62,13 +66,17 @@ npm run dev
 
 1. Push this repository to GitHub (already linked: `levensailor/tickets`).
 2. In the Vercel project **tickets**, set all environment variables above for Production (and Preview if desired).
-3. Set `NEXT_PUBLIC_SITE_URL` to `https://tickets-weld-beta.vercel.app` (or your custom domain) and redeploy.
-4. In Stripe Dashboard → Developers → Webhooks, add endpoint:
-   - URL: `https://tickets-weld-beta.vercel.app/api/webhooks/stripe`
+3. Set `NEXT_PUBLIC_SITE_URL` to `https://band.guru` (or your current Vercel URL until DNS is live) and redeploy.
+4. Attach the custom domain `band.guru` in the Vercel project Domains settings.
+5. In Stripe Dashboard → Developers → Webhooks, add endpoint:
+   - URL: `https://band.guru/api/webhooks/stripe`
    - Event: `checkout.session.completed`
    - Copy the signing secret into `STRIPE_WEBHOOK_SECRET`.
-5. In each OAuth provider console, add the Supabase callback URL shown in Supabase Auth settings.
-6. Run [`supabase/migrations/001_initial_schema.sql`](supabase/migrations/001_initial_schema.sql) in the Supabase SQL editor.
+6. In each OAuth provider console, add the Supabase callback URL shown in Supabase Auth settings, and use:
+   - Privacy: `https://band.guru/privacy`
+   - Terms: `https://band.guru/terms`
+   - Data deletion: `https://band.guru/data-deletion`
+7. Run [`supabase/migrations/001_initial_schema.sql`](supabase/migrations/001_initial_schema.sql) in the Supabase SQL editor.
 
 ## Login instructions
 
@@ -77,6 +85,7 @@ npm run dev
 3. After sign-in, your avatar appears at the top right with **Purchase History**, **Edit Profile**, and **Sign Out**.
 4. Create events from the homepage **Create New Event** button.
 5. Non-creators open an event to view details and buy tickets.
+6. To delete your account and data, open **Edit Profile** or visit `/data-deletion`.
 
 ## Payments model
 

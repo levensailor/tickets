@@ -14,7 +14,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight">{appName}</h1>
         <p className="mt-2 text-muted-foreground">
-          Sign in to buy tickets or create Wilmington music events.
+          Sign in to buy tickets or create music events on Band Guru.
         </p>
       </div>
       {params.error ? (

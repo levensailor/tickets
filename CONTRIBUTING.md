@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for contributing to Wilmington Tickets.
+Thanks for contributing to Band Guru.
 
 ## Workflow
 

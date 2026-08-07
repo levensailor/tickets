@@ -70,7 +70,7 @@ export function EventForm({ mode, event, flyers = [], cohosts = [] }: EventFormP
       <CardHeader>
         <CardTitle>{mode === "create" ? "Create event" : "Edit event"}</CardTitle>
         <CardDescription>
-          All fields below are required for a public Wilmington music event.
+          All fields below are required for a public Band Guru music event.
           Upload up to {MAX_FLYERS_PER_EVENT} flyer images.
         </CardDescription>
       </CardHeader>

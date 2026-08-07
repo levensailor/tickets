@@ -1,4 +1,4 @@
--- Wilmington Tickets: initial schema
+-- Band Guru: initial schema
 -- Run this script manually in the Supabase SQL editor.
 
 -- Profiles (mirrors auth.users with IdP-captured identity fields)
