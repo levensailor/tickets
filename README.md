@@ -17,6 +17,8 @@ Users sign in with Google, Facebook, Apple, or email. Organizers create events w
 ## Public assets / live URL
 
 - Production URL: [https://tickets-weld-beta.vercel.app](https://tickets-weld-beta.vercel.app)
+- Privacy Policy: [https://tickets-weld-beta.vercel.app/privacy](https://tickets-weld-beta.vercel.app/privacy)
+- Terms of Service: [https://tickets-weld-beta.vercel.app/terms](https://tickets-weld-beta.vercel.app/terms)
 - Login: open `/login` and choose Google, Facebook, Apple, or email magic link
 - GitHub: [https://github.com/levensailor/tickets](https://github.com/levensailor/tickets)
 

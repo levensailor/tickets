@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SiteHeader } from "@/components/site-header";
 import { Toaster } from "@/components/ui/sonner";
@@ -40,7 +41,16 @@ export default function RootLayout({
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <footer className="border-t py-6 text-center text-sm text-muted-foreground">
-          {appName} — Wilmington, NC music events
+          <p>{appName} — Wilmington, NC music events</p>
+          <p className="mt-2 flex items-center justify-center gap-3">
+            <Link href="/privacy" className="hover:text-foreground hover:underline">
+              Privacy Policy
+            </Link>
+            <span aria-hidden="true">·</span>
+            <Link href="/terms" className="hover:text-foreground hover:underline">
+              Terms of Service
+            </Link>
+          </p>
         </footer>
         <Toaster />
       </body>
