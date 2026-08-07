@@ -47,6 +47,7 @@ npm run dev
 | Variable | Purpose |
 |---|---|
 | `NEXT_PUBLIC_APP_NAME` | Display name (default: Wilmington Tickets) |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | Contact email shown on Privacy / Terms pages |
 | `NEXT_PUBLIC_SITE_URL` | Canonical site URL (used for OAuth redirects, Stripe, invites) |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
